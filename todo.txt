@@ -1,0 +1,25 @@
+
+TO DO:
+
+
+
+
+
+- windowMap - criar com opção de ler / abrir / salvar / excluir arquivos .xml dos diretorios
+
+- dialogs tendem a dar snap
+
+- criar sistema de debug baseado em objeto (similar event manager);
+- resolver problema da fila para carregar os componentes e interface;
+
+***
+
+
+DONE:
+- dialog fechar																									- OK
+- dialog minimizar																								- OK
+- canvas.js - portar para o novo modelo de objeto																- OK	
+- canvas.js - implementar modelo de matriz bi dimensional ligada a objeto										- OK
+- canvas.js - fazer as options (windowCanvas) de columns e rows da Canvas funcionar								- OK
+- canvas.js & windowCanvas.html - habilitar / desabilitar visualização de grid
+

@@ -1,0 +1,178 @@
+<!-- OBJECT TEMPLATE !-->
+<div id="windowCanvas" class="uiWindow uiNoTextSel">
+	<div class="uiWindowTitle">
+		<div class="label"> Canvas</div>
+		<div class="close" onclick="Ava_windowCanvas.handleSize(this)" style="right: 40px;"> <img class='windowCanvasSwitcher' src='_img/windowCanvas/btnCollapseWindow.png'> </div>
+		<div class="close"  onclick="Ava_windowCanvas.close()"> <img src='_img/windowCanvas/btnCloseWindow.png'>  </div>
+	</div>
+	<div class="uiWindowContent uiNoTextSel">
+		<div class="uiWindowSection" style="margin-top:30px;">General Info:</div>
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td class="uiWindowLabel" width="150">
+						Viewport Width:
+					</td>
+					<td id="uiWindowCanvasViewportWidth" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Viewport Height:
+					</td>
+					<td  id="uiWindowCanvasViewportHeight" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Viewport Cols:
+					</td>
+					<td id="uiWindowCanvasViewportCols" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Viewport Rows:
+					</td>
+					<td id="uiWindowCanvasViewportRows" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>								
+			</table>
+		<div class="uiWindowSection" style="margin-top:20px;">Options:</div> 
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td class="uiWindowLabel" width="140">
+						Canvas Columns:
+					</td>
+					<td class="uiWindowLabel" align="left">
+						<div id="uiWindowCanvas_uiField_canvasCols" class="uiDefaultField">-NaN-</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Canvas Rows:
+					</td>
+					<td class="uiWindowLabel" align="left">
+						<div id="uiWindowCanvas_uiField_canvasRows" class="uiDefaultField">-NaN-</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Show Grid:
+					</td>
+					<td class="uiWindowLabel" align="left">
+						<div id="uiWindowCanvas_Grid" class="uiDefaultField">0</div>						
+					</td>
+				</tr>					
+				<tr>
+					<td colspan="2" align="left">
+						<div class="uiWindowDefaultButton" onclick="Ava_Canvas.draw()"> RENDER </div>
+					</td>
+				</tr>
+			</table>
+		
+	</div>
+</div>
+
+<!-- SCRIPTS & FUNCTIONS !-->
+<script type="text/javascript">
+	var AvaWindowCanvas = function(options) {
+
+		this.init = function() {
+			// Interface Setup
+			$('#windowCanvas').draggable({ 
+				containment: "parent",
+				handle: ".uiWindowTitle"
+			});
+
+			$("#uiWindowCanvas_uiField_canvasCols").characterValidator({
+				"style" : "numbers",
+				"maxlength" : 3
+			}).mouseover(function() {
+				$(this).attr("contenteditable", "true");
+				$(this).focus();
+			}).mouseout(function() {
+				$(this).attr("contenteditable", "false");
+			}).blur(function() {
+				Ava_Canvas.setCanvasCols($(this).html());
+			});
+
+			$("#uiWindowCanvas_uiField_canvasRows").characterValidator({
+				"style" : "numbers",
+				"maxlength" : 3
+			}).mouseover(function() {
+				$(this).attr("contenteditable", "true");
+				$(this).focus();
+			}).mouseout(function() {
+				$(this).attr("contenteditable", "false");
+			}).blur(function() {
+				Ava_Canvas.setCanvasRows($(this).html());
+			});
+
+			$("#uiWindowCanvas_Grid").characterValidator({
+				"style": "numbers",
+				"maxlength" : 1
+			}).mouseover(function() {
+				$(this).attr("contenteditable", "true");
+				$(this).focus();
+			}).mouseout(function() {
+				$(this).attr("contenteditable", "false");
+			}).blur(function() {
+				Ava_Canvas.setCanvasGrid($(this).html());
+			});
+
+			// Filling Dialog with Info
+			$("#uiWindowCanvasViewportCols").html($("#" + Ava_CanvasFrame).width() / Ava_Canvas.settings.tileWidth );
+			$("#uiWindowCanvasViewportRows").html($("#" + Ava_CanvasFrame).height() / Ava_Canvas.settings.tileHeight );
+			$("#uiWindowCanvasViewportWidth").html($("#" + Ava_CanvasFrame).width() + " pixels");
+			$("#uiWindowCanvasViewportHeight").html($("#" + Ava_CanvasFrame).height() + " pixels");
+			$("#uiWindowCanvas_uiField_canvasCols").html( Ava_Canvas.getCanvasCols );
+			$("#uiWindowCanvas_uiField_canvasRows").html( Ava_Canvas.getCanvasRows );
+			$("#uiWindowCanvas_Grid").html( Ava_Canvas.getCanvasGrid );
+
+			// Binding events to this dialog using EventManager
+			eventFunction = {
+				id: 'windowCanvas',
+				function: function() {
+					$("#uiWindowCanvasViewportWidth").html($("#" + Ava_CanvasFrame).width() + " pixels");
+					$("#uiWindowCanvasViewportHeight").html($("#" + Ava_CanvasFrame).height() + " pixels");
+
+					$("#uiWindowCanvasViewportCols").html($("#" + Ava_CanvasFrame).width() / Ava_Canvas.settings.tileWidth );
+					$("#uiWindowCanvasViewportRows").html($("#" + Ava_CanvasFrame).height() / Ava_Canvas.settings.tileHeight );
+				}
+			}
+
+			Ava_EventManager.registerFunction(Ava_CanvasFrame, 'resize', eventFunction);
+			console.log('[UI] AvaWindowCanvas sucessfully loaded');		
+
+		}
+
+		
+		// Inteface Functions
+		this.close = function() {
+			$("#windowCanvas").fadeOut(function() {
+				$(this).remove();
+				Ava_EventManager.unRegisterFunction(Ava_CanvasFrame, 'resize', 'windowCanvas');
+			});
+			
+		}
+
+		this.handleSize = function(div) {
+			if ( $("#windowCanvas").height() > 40) {
+				$("#windowCanvas").height(40);
+				$(".windowCanvasSwitcher").attr("src", "_img/windowCanvas/btnExpandWindow.png");
+				return;
+			} else {
+				$("#windowCanvas").height('auto');
+				$(".windowCanvasSwitcher").attr("src", "_img/windowCanvas/btnCollapseWindow.png");
+				return;
+			}
+		}
+
+		this.init();
+
+	}
+</script>

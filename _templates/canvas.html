@@ -1,0 +1,42 @@
+<!-- OBJECT TEMPLATE !-->
+<div id="canvasFrame" class="canvasFrame">
+	<canvas id="canvasStage" class="canvasStage"></canvas>
+    <div class="canvasMoldure"><div>
+</div>
+
+
+<!-- SCRIPTS & FUNCTIONS !-->
+<script type="text/javascript">
+    var AvaObjCanvas = function(options) {
+
+        this.init = function() {
+            // EVENT MANAGER        
+            events = { 'resize' : [] }
+            Ava_EventManager.registerEvent(Ava_CanvasFrame, events );     //  Making canvasFrame.resize a public event
+
+
+            // STARTING INTERFACE
+            $("#" + Ava_CanvasFrame).draggable({ 
+                containment: "parent"
+            }).resizable({ 
+                grid: [ Ava_Canvas.settings.tileWidth, Ava_Canvas.settings.tileHeight ],
+                minWidth: Ava_Canvas.settings.minWidth,
+                minHeight: Ava_Canvas.settings.minHeight
+            });
+            
+            $("#" + Ava_CanvasFrame).on("resize", function(event,ui) {
+                $("#" + Ava_CanvasStage).attr("width", $(this).width() + "px").attr("height" , $(this).height());
+                Ava_Canvas.draw();              // WEIRD WEIRD WEIRD
+            });
+
+            $("#" + Ava_CanvasStage).attr("width", $("#" + Ava_CanvasFrame).width() + "px").attr("height" , $("#" + Ava_CanvasFrame).height());
+
+            console.log('[UI] AvaObjCanvas sucessfully loaded');
+
+
+        }
+
+        this.init()
+    }
+
+</script>

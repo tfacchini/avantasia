@@ -1,0 +1,78 @@
+<!-- OBJECT TEMPLATE !-->
+<div id="windowMap" class="uiWindow uiNoTextSel">
+	<div class="uiWindowTitle">
+		<div class="label"> Isometric Map </div>
+		<div class="close" onclick="Ava_windowCanvas.handleSize(this)" style="right: 40px;"> <img class='windowCanvasSwitcher' src='_img/windowCanvas/btnCollapseWindow.png'> </div>
+		<div class="close"  onclick="Ava_windowCanvas.close()"> <img src='_img/windowCanvas/btnCloseWindow.png'>  </div>
+	</div>
+	<div class="uiWindowContent uiNoTextSel">
+		<div class="uiWindowSection" style="margin-top:30px;">General Info:</div>
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td class="uiWindowLabel" width="150">
+						Viewport Width:
+					</td>
+					<td id="uisadadaWindowCanvasViewportWidth" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Viewport Height:
+					</td>
+					<td  id="uiWindasdsadowCanvasViewportHeight" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Viewport Cols:
+					</td>
+					<td id="uiWindosdaasdsawCanvasViewportCols" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Viewport Rows:
+					</td>
+					<td id="uiWindsadadaowCanvasViewportRows" class="uiWindowLabel" align="left" style="font-weight: 700;">
+						-NaN-
+					</td>
+				</tr>								
+			</table>
+		<div class="uiWindowSection" style="margin-top:20px;">Options:</div> 
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td class="uiWindowLabel" width="140">
+						Canvas Columns:
+					</td>
+					<td class="uiWindowLabel" align="left">
+						<div id="uiWindsadsadowCanvas_uiField_canvasCols" class="uiDefaultField">-NaN-</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Canvas Rows:
+					</td>
+					<td class="uiWindowLabel" align="left">
+						<div id="uiWidasdsandowCanvas_uiField_canvasRows" class="uiDefaultField">-NaN-</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="uiWindowLabel">
+						Show Grid:
+					</td>
+					<td class="uiWindowLabel" align="left">
+						<div id="uiWinasdasdowCanvas_Grid" class="uiDefaultField">0</div>						
+					</td>
+				</tr>					
+				<tr>
+					<td colspan="2" align="left">
+						<div class="uiWindowDefaultButton" onclick="Ava_Canvas.draw()"> RENDER </div>
+					</td>
+				</tr>
+			</table>
+		
+	</div>
+</div>
