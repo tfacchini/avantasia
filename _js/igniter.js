@@ -7,42 +7,45 @@ var uiContainer					= 'uiContainer'				// DIV ID - A div from the HTML file wher
 
 $( document ).ready(function() {
 
-	// MODULES
+	// LOAD MANAGER
 	$.ajax({
-		url: 		"_js/eventManager.js",
+		url: 		"_js/loadManager.js",
 		dataType: 	"script",
 		success: 	function() {
-			Ava_EventManager = new AvaEventManager();					
+			Ava_LoadManager = new avaLoadManager();	
+
+			// ALL OBJECT, RESOURCES, CONTROLLERS, TEMPLATES -M-U-S-T- USE LOAD MANAGER
+			// Ava_LoadManager.queue('referenceId', 'fileUrl', 'dataType(script / html)', callback);
+			
+			// MODULE - EVENT MANAGER
+			Ava_LoadManager.queue('Ava_EventManager', "_js/eventManager.js", 'script', function() { 
+				Ava_EventManager = new AvaEventManager();
+			});
+
+			// MODULE - CANVAS
+			Ava_LoadManager.queue('Ava_Canvas', '_js/canvas.js', 'script', function() {
+				Ava_Canvas = new AvaCanvas();
+				AvaStart();	
+			});
+
+			// OBJECT - CANVAS
+			Ava_LoadManager.queue('Ava_objCanvas', '_templates/canvas.html', 'html', function(dataResponse) {
+				$('#' + Ava_CanvasContainer).append(dataResponse);			// load object into place
+				Ava_objCanvas = new AvaObjCanvas();							// start loaded object
+			});
+
+
+			Ava_LoadManager.run();
 		}
-	})
-
-	$.ajax({
-		url: 		"_js/canvas.js",
-		dataType: 	"script",
-		success: 	function() {
-			Ava_Canvas = new AvaCanvas();
-			AvaStart();	
-		}
-	});		
+	});
 
 
+	// MODULES		
 	
 	
 	function AvaStart() {
 		// OBJECT
-		$.ajax({ 
-			type: 		"GET", 
-			url: 		"_templates/canvas.html", 
-			async: 		false, 
-			dataType: 	"html",
-			cache: 		false,
-			success: 	function(templateContent) { 
 
-				$('#' + Ava_CanvasContainer).append(templateContent);		// load object into place
-				Ava_objCanvas = new AvaObjCanvas();							// start loaded object
-
-			}
-		});
 
 		// ISOMETRIC MAP DIALOG
 		$.ajax({ 
